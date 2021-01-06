@@ -1,0 +1,15 @@
+[Unit]
+Description=Rabbitmq dockerized serivice
+After=docker.service
+Requires=docker.service
+Documentation=https://github.com/0x000def42/docker-systemd-rabbitmq
+
+[Service]
+Type=simple 
+TimeoutSec=30
+ExecStart=/usr/bin/docker run -p 5672:5672 --rm --network rabbitmq.network --name %n rabbitmq:3
+ExecStop=/usr/bin/docker stop %n
+ExecReload=/usr/bin/docker restart %n
+
+[Install]
+WantedBy=multi-user.target
